@@ -1,22 +1,11 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        if (s.size() != t.size()) {
-            return false;
-        }
-        std::map<char, int> freq_s;
-        std::map<char, int> freq_t;
-        for (char ch : s) {
-            freq_s[ch]++;
-        }
-        for (char ch : t) {
-            freq_t[ch]++;
-        }
-        for (char ch : s) {
-            if (freq_t[ch] != freq_s[ch]) {
-                return false;
-            }
-        }
-        return true;
+        //sort strings and check if they're the same.
+        //use a map and check if the frequency of the characters is the same in each of the cases
+        sort(s.begin(), s.end());
+        sort(t.begin(), t.end());
+
+        return s == t;
     }
 };
