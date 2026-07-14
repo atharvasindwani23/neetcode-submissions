@@ -1,32 +1,34 @@
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-        std::map<int,bool> flag;
-        for (int i : nums) {
-            flag[i] = false;
+        unordered_set<int> numbers;
+
+        for (int num : nums) {
+            numbers.insert(num);
+        }
+
+        vector<int> starts;
+
+        for (int num : nums) {
+            if (!numbers.count(num - 1)) {
+                starts.push_back(num);
+            }
         }
         if (nums.size() == 0) {
             return 0;
         }
-        vector<int> starter;
-        for (int i = 0; i < nums.size(); i++) {
-            if (!flag.count(nums[i] - 1)) {
-                starter.push_back(nums[i]);
-            }
+        int len = 1;
+
+        for (int start : starts) {
+            int x = start;
+            int count = 1;
+            while (numbers.count(x + 1)) {
+            x++;
+            count++;
         }
-        std::cout << starter[0] << std::endl;
-        int returner = 0;
-        for (int i = 0; i < starter.size(); i++) {
-            int maxi = 0;
-            int start = starter[i];
-            std::cout << start << std::endl;
-            while (flag.count(start)) {
-                maxi++;
-                start += 1;
-            }
-            returner = max(returner, maxi);
-        }
-        return returner;
+        len = max(len, count);
     }
-            
+        return len;
+    }
+    //create a list of starts, then keep going forward so overall time complexity is o(n)
 };
