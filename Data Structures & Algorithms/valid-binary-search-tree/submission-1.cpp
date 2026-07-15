@@ -13,23 +13,22 @@
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
-        vector<int> ordered;
-        inOrderTraversal(root, ordered);
-        for (unsigned int i = 0; i < ordered.size() - 1; i++) {
-            if (ordered[i] >= ordered[i + 1]) {
+        vector<int> elements;
+        inOrderTraversal(root, elements);
+        for (int i = 0; i < elements.size() - 1; i++) {
+            if (elements[i] >= elements[i + 1]) {
                 return false;
             }
         }
         return true;
     }
 
-    void inOrderTraversal(TreeNode* root, vector<int>& inOrder) {
+    void inOrderTraversal(TreeNode* root, vector<int>& elements) {
         if (!root) {
             return;
         }
-        inOrderTraversal(root->left, inOrder);
-        inOrder.push_back(root->val);
-        inOrderTraversal(root->right, inOrder);
-
+        inOrderTraversal(root->left, elements);
+        elements.push_back(root->val);
+        inOrderTraversal(root->right, elements);
     }
 };
