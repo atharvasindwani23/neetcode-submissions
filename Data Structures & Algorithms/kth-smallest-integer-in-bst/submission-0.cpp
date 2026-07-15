@@ -13,17 +13,18 @@
 class Solution {
 public:
     int kthSmallest(TreeNode* root, int k) {
-        vector<int> inOrd;
-        inOrder(root, inOrd);
-        return inOrd[k - 1];
+        vector<int> vec;
+        inOrderTraversal(root, vec);
+        return vec[k - 1];
     }
 
-    void inOrder(TreeNode* root, vector<int>& travy) {
+    void inOrderTraversal(TreeNode* root, vector<int>& vec) {
         if (!root) {
             return;
         }
-        inOrder(root->left, travy);
-        travy.push_back(root->val);
-        inOrder(root->right, travy);
+        inOrderTraversal(root->left, vec);
+        vec.push_back(root->val);
+        inOrderTraversal(root->right, vec);
+        
     }
 };
