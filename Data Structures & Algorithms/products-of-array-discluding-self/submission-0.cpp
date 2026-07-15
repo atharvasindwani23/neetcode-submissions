@@ -1,27 +1,31 @@
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
-       std::vector<int> prefix_array(nums.size(), 1);
-       std::vector<int> suffix_array(nums.size(), 1);
-       for (int i = 1; i < nums.size(); i++) {
-            prefix_array[i] = prefix_array[i - 1] * nums[i - 1];
-       }
-       for (int i = nums.size() - 2; i >= 0; i--) {
-            suffix_array[i] = suffix_array[i + 1] * nums[i + 1];
-       }
-       std::vector<int> returner(nums.size());
+        vector<int> rightProduct(nums.size());
+        vector<int> leftProduct(nums.size());
 
-       for (int i = 0; i < nums.size(); i++) {
-        std::cout << prefix_array[i] << std::endl;
-        std::cout << suffix_array[i] << std::endl;
-        returner[i] = prefix_array[i] * suffix_array[i];
-       }
-       return returner;
+        rightProduct[nums.size() - 1] = nums[nums.size() - 1];
+        leftProduct[0] = nums[0];
+        for (int i = nums.size() - 1; i > 0; i--) {
+            rightProduct[i - 1] = nums[i - 1] * rightProduct[i];
+        }
+        for (int i = 0; i < nums.size() - 1; i++) {
+            leftProduct[i + 1] =  leftProduct[i] * nums[i + 1];
+        }
+
+        vector<int> result(nums.size());
+        result[0] = rightProduct[1];
+        result[nums.size() - 1] = leftProduct[nums.size() - 2];
+
+        for (int i = 1; i <= nums.size() - 2; i++) {
+            result[i] = rightProduct[i + 1] * leftProduct[i - 1];
+        }
+        return result;
     }
+
+    //two arrays one which multiplies everything to the right
+    //the other which multiplies everything to the left
+    //then just combine the two
+    //call the arrays rightProduct; leftProduct;
+    //rightProduct[i] * leftProduct[i] is what we need for each i essentially; thats the whole logic.
 };
-//ok think 0(n) operation how can we do it, without using the division operator
-// we can do left * right but that in itself will make it an O(n^2) operation we want to do it in one sweep
-// can we use maps or smth?
-
-
-/// [1 2 4 6]
